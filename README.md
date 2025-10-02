@@ -80,4 +80,7 @@ This ranking can be used as a systematic way to identify potential investment op
   - `plots/` – generated plots  
   - `requirements.txt` – dependencies  
   - `README.md` – project description
+ 
+  - Licensed under the MIT License © 2025 Mateusz Misiak.
+Disclaimer: Educational purposes only. Not investment advice.
 
