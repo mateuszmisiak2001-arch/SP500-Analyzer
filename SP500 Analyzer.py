@@ -5,13 +5,28 @@ import yfinance as yf
 import numpy as np
 from datetime import datetime
 from yahooquery import Ticker
+from pathlib import Path
+import os
 
-#Global Variables - to change
-filepath = "C:\\Users\\Mateusz\\Desktop\\Mateusz\\PYTHON\\SP500 Test\\SP500_stocks_data.csv"
-filepath_2 = "C:\\Users\\Mateusz\\Desktop\\Mateusz\\PYTHON\\SP500 Test\\df_analysis_data.csv"
+try:
+    BASE_DIR = Path(__file__).resolve().parent
+except NameError:
+    BASE_DIR = Path.cwd()
+
+DATA_DIR   = BASE_DIR / "data"
+OUTPUT_DIR = BASE_DIR / "output"
+PLOTS_DIR  = BASE_DIR / "plots"
+for d in (DATA_DIR, OUTPUT_DIR, PLOTS_DIR):
+    d.mkdir(parents=True, exist_ok=True)
+
 today = datetime.now().strftime("%Y-%m-%d")
-filepath_3 = f"C:\\Users\\Mateusz\\Desktop\\Mateusz\\Finance\\Finance Reports\\final_results_data_{today}.csv"
+
+filepath   = DATA_DIR   / "SP500_stocks_data.csv"
+filepath_2 = DATA_DIR   / "df_analysis_data.csv"
+filepath_3 = OUTPUT_DIR / f"final_results_data_{today}.csv"
+
 #Testing Flag (0-no / 1-yes)
+
 testing_flag = 0
 testing_flag_step_IV = 0
 
@@ -236,9 +251,9 @@ import matplotlib.pyplot as plt
 
 plt.figure(figsize=(10,6))
 plt.bar(top10['Ticker'], top10['Average_rank'], color="skyblue")
-plt.title("Top 10 Undervalued Stocks by Score")
+plt.title("Top 10 Undervalued Stocks (lower average rank = better)")
+plt.ylabel("Average rank ↓")
 plt.xlabel("Ticker")
-plt.ylabel("Average rank")
 plt.grid(axis='y', linestyle='--', alpha=0.7)
 
 #Add values on top of bars
@@ -246,18 +261,9 @@ for i, v in enumerate(top10['Average_rank']):
     plt.text(i, v + 0.01, f"{v:.2f}", ha='center', fontsize=9)
 
 plt.tight_layout()
-
-from pathlib import Path
-
-#Saving plot
-BASE_DIR = Path(__file__).resolve().parent
-plots_dir = BASE_DIR / "plots"
-plots_dir.mkdir(exist_ok=True)  # utwórz folder, jeśli go nie ma
-
-plot_path = plots_dir / "top10_barplot.png"
+plot_path = PLOTS_DIR / "top10_barplot.png"
 plt.savefig(plot_path)
 print(f"Plot saved at: {plot_path}")
-plt.savefig("top10_barplot.png")
 
 #VI Exit Strategy
 
@@ -274,3 +280,4 @@ df_final = df_rank.copy()
 print(df_final.head(10))
 df_final.to_csv(filepath_3, index = True)
 print(f"The report has been finished and saved in{filepath_3}")
+
