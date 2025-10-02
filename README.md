@@ -74,9 +74,11 @@ This ranking can be used as a systematic way to identify potential investment op
 ---
 
 ## Repository Structure  
+
+SP500-Analyzer/
 │
-├── sp500_analyzer.py #main script
-├── plots/ #generated plots
-├── requirements.txt #dependencies
-└── README.md #project description
+├── sp500_analyzer.py # main script
+├── plots/ # generated plots
+├── requirements.txt # dependencies
+└── README.md # project description
 
